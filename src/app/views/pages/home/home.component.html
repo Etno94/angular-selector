@@ -1,1 +1,50 @@
-<p>home works!</p>
+ <!-- Header -->
+ <header class="header">
+    <div class="header-actions">
+      <button class="icon-button">
+        <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
+      </button>
+      <button class="icon-button">
+        <fa-icon [icon]="['fas', 'bell']"></fa-icon>
+      </button>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title-container">
+          <h2 class="card-title">Domicilio completo</h2>
+          <div class="card-subtitle">
+            <span class="nis">NIS: 123456789</span>
+            <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
+
+            <span class="separator">|</span>
+            <span class="alias">Alias: Nombre del alias</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="icon-button settings-button">
+            <i class="fas fa-cog"></i>
+          </button>
+          <button class="dropdown-button">
+            <i class="fas fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="tags">
+          <span class="tag"><i class="fas fa-tag"></i> Etiqueta</span>
+          <span class="tag"><i class="fas fa-tag"></i> Etiqueta</span>
+          <span class="tag"><i class="fas fa-tag"></i> Etiqueta</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Action Button -->
+  <button class="fab">
+    <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+    <span class="fab-text">Asociar<br />Suministro</span>
+  </button>

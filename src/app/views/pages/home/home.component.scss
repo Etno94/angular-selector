@@ -1,0 +1,145 @@
+@use '@styles/_variables.scss' as vars;
+
+.header {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 16px;
+    background-color: vars.$card-bg;
+    border-bottom: 1px solid vars.$border-color;
+  }
+  
+  .header-actions {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .icon-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid vars.$border-color;
+    cursor: pointer;
+    color: vars.$text-color;
+  
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+  
+  .content {
+    padding: 24px;
+    flex: 1;
+  }
+  
+  .card {
+    background-color: vars.$card-bg;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+  
+  .card-header {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .card-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .card-subtitle {
+    font-size: 14px;
+    color: #666;
+    display: flex;
+    gap: 8px;
+  }
+  
+  .separator {
+    opacity: 0.5;
+  }
+  
+  .card-actions {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .settings-button {
+    color: #666;
+  }
+  
+  .dropdown-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f7ff;
+    border: none;
+    cursor: pointer;
+    color: vars.$primary-color;
+  }
+  
+  .card-content {
+    padding: 0 24px 24px;
+  }
+  
+  .tags {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    background-color: vars.$tag-bg;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #666;
+  
+    i {
+      font-size: 10px;
+    }
+  }
+  
+  // Floating Action Button
+  .fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    background-color: vars.$primary-color;
+    color: vars.$light-text;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+    
+    i {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    
+    .fab-text {
+      font-size: 12px;
+      text-align: center;
+      line-height: 1.2;
+    }
+  }
