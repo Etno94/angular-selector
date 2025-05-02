@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LayoutComponent } from './views/layout/layout.component';
 
 @Component({
   selector: 'app-root',
   imports: [
-    RouterOutlet,
-    FontAwesomeModule
+    FontAwesomeModule,
+    LayoutComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
