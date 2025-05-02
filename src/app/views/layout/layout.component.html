@@ -1,0 +1,152 @@
+<!-- <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">STOREY</div>
+      <nav>
+        <ul>
+          <li><a href="#">Texto ejemplo</a></li>
+          <li><a href="#">Servicios</a></li>
+          <li><a href="#">Texto ejemplo</a></li>
+        </ul>
+      </nav>
+      <div class="user-info">
+        <p>Emanuel Hernández</p>
+        <a href="#">Mi cuenta</a>
+      </div>
+    </aside>
+  
+    <div class="main-content">
+      <header class="header">
+        <div class="search-bar">
+          <input type="text" placeholder="Buscar" />
+        </div>
+        <div class="actions">
+          <button>🔔</button>
+          <button>🔍</button>
+        </div>
+      </header>
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div> -->
+
+<div class="app-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <!-- Logo -->
+    <div class="logo-container">
+      <div class="logo">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="logo-icon"
+        >
+          <path
+            d="M12 2L2 7L12 12L22 7L12 2Z"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <span class="logo-text">STOREY</span>
+      </div>
+      <div class="collapse-icon">«</div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-container">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" placeholder="Buscar" class="search-input" />
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navigation">
+      <a href="#" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>Texto ejemplo</span>
+      </a>
+
+      <div class="nav-section">
+        <h3 class="section-title">Servicios</h3>
+
+        <a href="#" class="nav-item active">
+          <i class="fas fa-file-alt"></i>
+
+          <span>Texto ejemplo</span>
+          <fa-icon [icon]="['fas', 'chevron-down']"></fa-icon>
+
+        </a>
+
+        <a href="#" class="nav-item">
+          <i class="fas fa-building"></i>
+          <span>Texto ejemplo</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- User Profile -->
+    <div class="user-profile">
+      <div class="user-info">
+        <h4 class="user-name">Emanuel Hernández</h4>
+        <p class="user-role">Mi cuenta</p>
+      </div>
+      <div class="user-avatar">E</div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-actions">
+        <button class="icon-button">
+          <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
+        </button>
+        <button class="icon-button">
+          <fa-icon [icon]="['fas', 'bell']"></fa-icon>
+        </button>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="content">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-container">
+            <h2 class="card-title">Domicilio completo</h2>
+            <div class="card-subtitle">
+              <span class="nis">NIS: 123456789</span>
+              <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
+
+              <span class="separator">|</span>
+              <span class="alias">Alias: Nombre del alias</span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="icon-button settings-button">
+              <i class="fas fa-cog"></i>
+            </button>
+            <button class="dropdown-button">
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="tags">
+            <span class="tag"><i class="fas fa-tag"></i> Etiqueta</span>
+            <span class="tag"><i class="fas fa-tag"></i> Etiqueta</span>
+            <span class="tag"><i class="fas fa-tag"></i> Etiqueta</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab">
+      <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+      <span class="fab-text">Asociar<br />Suministro</span>
+    </button>
+  </main>
+</div>
