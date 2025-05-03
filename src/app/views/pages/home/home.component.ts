@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
+import { CardSelectorComponent } from '@app/shared/components/card-selector/card-selector.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faPlus, faMagnifyingGlass, faBell, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+
 
 
 @Component({
   selector: 'app-home',
   imports: [
     FontAwesomeModule,
+    CardSelectorComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

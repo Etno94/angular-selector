@@ -1,0 +1,59 @@
+.card-accordion {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+
+  mat-expansion-panel {
+    margin: 0;
+    border: none;
+
+    mat-expansion-panel-header {
+      padding: 16px;
+      background-color: #f9f9f9;
+      display: flex;
+      align-items: center;
+      height: 120px;
+
+      .card-header {
+        width: 100%;
+
+        .card-title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin: 0;
+        }
+
+        .card-subtitle {
+          font-size: 0.875rem;
+          color: #666;
+          margin: 4px 0;
+
+          .separator {
+            margin: 0 8px;
+          }
+        }
+
+        .tags {
+          margin-top: 8px;
+
+          .tag {
+            display: inline-block;
+            background-color: #e0e0e0;
+            color: #333;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+
+    .card-content {
+      padding: 16px;
+      font-size: 0.875rem;
+      color: #333;
+    }
+  }
+}
