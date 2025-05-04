@@ -13,11 +13,10 @@
 <!-- Content -->
 <div class="content">
 
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
-
-    <app-card-selector></app-card-selector>
+    <app-card-selector class="m-4" 
+      [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
+      [supply]="supply">
+    </app-card-selector>
 
 </div>
 

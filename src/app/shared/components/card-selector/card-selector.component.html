@@ -1,25 +1,81 @@
-<mat-accordion class="card-accordion">
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <div class="card-header">
-          <h2 class="card-title">Domicilio completo</h2>
-          <p class="card-subtitle">
-            <span class="nis">NIS: 123456789</span>
-            <span class="separator">|</span>
-            <span class="alias">Alias: Nombre del alias</span>
-          </p>
-          <div class="tags">
-            <span class="tag">Etiqueta</span>
-            <span class="tag">Etiqueta</span>
-            <span class="tag">Etiqueta</span>
-          </div>
+@if (isSupplyIdValid()) {
+  <div class="shadow-lg rounded-lg overflow-hidden bg-white">
+    <div
+      class="p-4 flex items-center justify-between"
+      (click)="toggleAccordion()"
+    >
+      <div id="card-header-content">
+        <h2 class="text-xl font-semibold m-0">{{ supply().address }}</h2>
+        <p class="text-sm mt-1 mb-1">
+          <span class="nis">NIS: {{ supply().nis }}</span>
+          <span class="mr-2 ml-2">|</span>
+          <span class="alias">Alias: {{ supply().alias }} </span>
+        </p>
+        <div class="mt-2">
+          @for (tag of supply().tags; track $index) {
+          <span
+            class="inline bg-gray-100 text-gray-700 pt-1 pb-1 pl-2 pr-2 mr-1 rounded-xs text-xs"
+            >{{ tag.text }}</span
+          >
+          }
         </div>
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <div class="card-content">
-      <p>I am the content!</p>
+      </div>
+  
+      <div id="selector-buttons">
+        <button mat-icon-button class="" (click)="openSuplyMenu()">
+          <mat-icon>settings</mat-icon>
+        </button>
+  
+        <button class="">
+          @if (isOpen) {
+          <mat-icon>expand_less</mat-icon>
+          } @else {
+          <mat-icon>expand_more</mat-icon>
+          }
+        </button>
+      </div>
     </div>
-  </mat-expansion-panel>
-</mat-accordion>
+  
+    <div class="flex overflow-hidden bg-blue-200 card-content" [class.open]="isOpen">
+      <!-- We use the No Linked supply()  template-->
+      @if (supply().linkedSupplies.length <= 0) {
+      } 
+      <!-- We use the Linked supply() template-->
+      @else if (supply().linkedSupplies.length <= 2) {
+        @for (linkedsupply of supply().linkedSupplies; track $index) {
+          <ng-container *ngTemplateOutlet="linkedsupplyTemplate; context: { $implicit: linkedsupply }" ></ng-container>
+        }
+      } 
+      <!-- We use the Input Suggest for Linked supply() template-->
+      @else {
+      }
+    </div>
+  </div>
+} @else {
+  <div></div>
+}
 
+
+<ng-template #noSupply>
+  <div class="shadow-lg rounded-lg overflow-hidden bg-white">
+    <div class="p-4 flex items-center justify-between">
+      <h2 class="text-xl font-semibold m-0">No hay suministro</h2>
+      <button mat-icon-button class="" (click)="openSuplyMenu()">
+        <mat-icon>settings</mat-icon>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #linkedsupplyTemplate let-linkedsupply>
+  <div class="shadow-lg rounded-lg overflow-hidden bg-white">
+    <h3>Suministro</h3>
+    <h2 class="text-xl font-semibold m-0">{{ linkedsupply.address }}</h2>
+    <p class="text-sm mt-1 mb-1">
+      <span class="nis">Localidad: {{ linkedsupply.area }}</span>
+      <span class="mr-2 ml-2">|</span>
+      <span class="alias">Alias: {{ linkedsupply.alias }} </span>
+    </p>
+  </div>
+</ng-template>
