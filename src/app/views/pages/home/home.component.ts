@@ -1,12 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ISupply } from '@app/models/ISupply.interface';
+import { SupplyService } from '@app/services/supply.service';
 import { CardSelectorComponent } from '@app/shared/components/card-selector/card-selector.component';
 import { config } from '@environments/config';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faPlus, faMagnifyingGlass, faBell, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-
-
 
 @Component({
   selector: 'app-home',
@@ -21,46 +20,44 @@ export class HomeComponent implements OnInit {
 
   LINKED_SUPPLIES_THRESHOLD: number = config.linkedSuppliesThreshold;
 
-  supply = signal<ISupply>(
-    {
-      id: 0,
-      address: '',
-      nis: 0,
-      alias: '',
-      tags: [],
-      status: '',
-      linkedSupplies: [],
-    });
+  voidSupplyObj: ISupply = {
+    id: 0,
+    address: '',
+    nis: 0,
+    alias: '',
+    tags: [],
+    status: '',
+    linkedSupplies: [],
+  };
 
-    supplyData: ISupply = {
-      id: 234,
-      address: 'Avenida Libertad 2541',
-      nis: 123,
-      alias: 'Suministro Av. Libertad',
-      tags: [
-        { id: 1, text: 'Tag 1' },
-        { id: 2, text: 'Tag 2' },
-        { id: 3, text: 'Tag 3' },
-      ],
-      status: 'active',
-      linkedSupplies: [
-        { id: 1, 
-          address: 'Avenida Libertad 2541',
-          area: 'Las Tortuguitas',
-          alias: 'Suministro Av. Libertad', },
-        { id: 2, 
-          address: 'Avenida Libertad 2541',
-          area: 'Las Tortuguitas',
-          alias: 'Suministro Av. Libertad', }
-      ]
-    };
+  supplyData = signal<ISupply>(this.voidSupplyObj); //Data we'll use for card-selector component
 
-  constructor(library: FaIconLibrary) {
+  // Mock Supplies for showing different states in the card-selector component
+  mainSupplyData = signal<ISupply>(this.voidSupplyObj);
+  mainSupplyTwoLinkedData = signal<ISupply>(this.voidSupplyObj);
+  mainSupplyManyLinkedData = signal<ISupply>(this.voidSupplyObj);
+
+  constructor(library: FaIconLibrary, private supplyService: SupplyService) {
     library.addIcons(faPlus, faMagnifyingGlass, faBell, faChevronDown); // Register the 'plus' icon
   }
 
   ngOnInit() {
-    this.supply.set(this.supplyData);
+
+    // We would use this to get the supply data from the API
+    // this.supplyService.getSupplyData()
+
+    // Mock data for testing purposes
+    this.supplyService.getMockSupplyData().subscribe({
+      next: (supplyData: ISupply[]) => {
+        this.mainSupplyData.set(supplyData[0]);
+        this.mainSupplyTwoLinkedData.set(supplyData[1]);
+        this.mainSupplyManyLinkedData.set(supplyData[2]);
+      },
+      error: (err) => {
+        // Handle error here
+        console.error('Error fetching supply data:', err);
+      }
+    });
 
   }
 

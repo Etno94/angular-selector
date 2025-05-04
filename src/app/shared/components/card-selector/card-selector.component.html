@@ -1,4 +1,5 @@
 @if (isSupplyIdValid()) {
+
   <div class="shadow-lg rounded-lg overflow-hidden bg-white">
     <div
       class="p-4 flex items-center justify-between"
@@ -25,50 +26,47 @@
         <button mat-icon-button class="" (click)="openSuplyMenu()">
           <mat-icon>settings</mat-icon>
         </button>
-  
-        <button class="">
-          @if (isOpen) {
-          <mat-icon>expand_less</mat-icon>
-          } @else {
-          <mat-icon>expand_more</mat-icon>
-          }
-        </button>
+
+        @if (hasLinkedSupplies()) {
+          <button class="">
+            @if (isOpen) {
+            <mat-icon>expand_less</mat-icon>
+            } @else {
+            <mat-icon>expand_more</mat-icon>
+            }
+          </button>
+        } 
+        
       </div>
     </div>
-  
-    <div class="flex overflow-hidden bg-blue-200 card-content" [class.open]="isOpen">
-      <!-- We use the No Linked supply()  template-->
-      @if (supply().linkedSupplies.length <= 0) {
-      } 
-      <!-- We use the Linked supply() template-->
-      @else if (supply().linkedSupplies.length <= 2) {
-        @for (linkedsupply of supply().linkedSupplies; track $index) {
-          <ng-container *ngTemplateOutlet="linkedsupplyTemplate; context: { $implicit: linkedsupply }" ></ng-container>
+
+    @if (hasLinkedSupplies()) {
+      <div class="flex overflow-hidden bg-blue-200 card-content" [class.open]="isOpen">
+        <!-- We use the Input Suggest for Linked supply template-->
+        @if (hasLinkedSuppliesAboveThreshold()) {
+          <ng-container *ngTemplateOutlet="LinkedSuppliesSearchTemplate" ></ng-container>
+        } 
+        <!-- We use the Linked supply template-->
+        @else {
+          @for (linkedSupply of supply().linkedSupplies; track $index) {
+            <ng-container *ngTemplateOutlet="LinkedSupplyTemplate; context: { $implicit: linkedSupply }" ></ng-container>
+          }
         }
-      } 
-      <!-- We use the Input Suggest for Linked supply() template-->
-      @else {
-      }
-    </div>
+      </div>
+    }
+    
   </div>
-} @else {
-  <div></div>
-}
 
-
-<ng-template #noSupply>
+} 
+@else {
   <div class="shadow-lg rounded-lg overflow-hidden bg-white">
     <div class="p-4 flex items-center justify-between">
       <h2 class="text-xl font-semibold m-0">No hay suministro</h2>
-      <button mat-icon-button class="" (click)="openSuplyMenu()">
-        <mat-icon>settings</mat-icon>
-      </button>
     </div>
   </div>
-</ng-template>
+}
 
-
-<ng-template #linkedsupplyTemplate let-linkedsupply>
+<ng-template #LinkedSupplyTemplate let-linkedsupply>
   <div class="shadow-lg rounded-lg overflow-hidden bg-white">
     <h3>Suministro</h3>
     <h2 class="text-xl font-semibold m-0">{{ linkedsupply.address }}</h2>
@@ -78,4 +76,8 @@
       <span class="alias">Alias: {{ linkedsupply.alias }} </span>
     </p>
   </div>
+</ng-template>
+
+<ng-template #LinkedSuppliesSearchTemplate>
+  <input type="text" placeholder="Buscar suministro" class="w-full p-2 border rounded" />
 </ng-template>

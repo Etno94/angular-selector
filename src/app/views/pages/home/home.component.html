@@ -13,9 +13,27 @@
 <!-- Content -->
 <div class="content">
 
+    <!--No Linked Supply-->
+    <app-card-selector class="m-4" 
+      [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD">
+    </app-card-selector>
+
+    <!--Main Supply-->
     <app-card-selector class="m-4" 
       [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
-      [supply]="supply">
+      [supply]="mainSupplyData">
+    </app-card-selector>
+
+    <!--Main Supply + 2 Linked Supplies-->
+    <app-card-selector class="m-4" 
+      [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
+      [supply]="mainSupplyTwoLinkedData">
+    </app-card-selector>
+
+    <!--Main Supply with many Linked Supplies-->
+    <app-card-selector class="m-4" 
+      [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
+      [supply]="mainSupplyManyLinkedData">
     </app-card-selector>
 
 </div>

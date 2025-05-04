@@ -37,4 +37,12 @@ export class CardSelectorComponent {
     return this.supply() && this.supply().id > 0;
   }
 
+  hasLinkedSupplies() {
+    return this.supply() && this.supply().linkedSupplies.length > 0;
+  }
+
+  hasLinkedSuppliesAboveThreshold() {
+    return this.supply() && this.supply().linkedSupplies.length > this.linkedSuppliesThreshold;
+  }
+
 }
