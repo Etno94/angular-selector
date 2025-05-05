@@ -15,6 +15,7 @@ export class SupplyService {
     {
       id: 234,
       address: 'Avenida Libertad 2541',
+      area: 'Downtown',
       nis: 123,
       alias: 'Suministro Av. Libertad',
       tags: [
@@ -23,75 +24,48 @@ export class SupplyService {
         { id: 3, text: 'Tag 3' },
       ],
       status: 'active',
-      linkedSupplies: [],
     },
     {
-      id: 234,
-      address: 'Avenida Libertad 2541',
+      id: 205,
+      address: '987 Willow Way',
+      area: 'Rural',
       nis: 123,
-      alias: 'Suministro Av. Libertad',
-      tags: [
-        { id: 1, text: 'Tag 1' },
-        { id: 2, text: 'Tag 2' },
-        { id: 3, text: 'Tag 3' },
-      ],
+      alias: 'Backup Supply 5',
       status: 'active',
-      linkedSupplies: [
-        {
-          id: 204,
-          address: '654 Spruce Street',
-          area: 'Industrial Zone',
-          alias: 'Backup Supply 4',
-        },
-        {
-          id: 205,
-          address: '987 Willow Way',
-          area: 'Rural',
-          alias: 'Backup Supply 5',
-        },
-      ],
     },
     {
-      id: 234,
-      address: 'Avenida Libertad 2541',
+      id: 201,
+      address: '456 Oak Avenue',
+      area: 'Downtown',
       nis: 123,
-      alias: 'Suministro Av. Libertad',
-      tags: [
-        { id: 1, text: 'Tag 1' },
-        { id: 2, text: 'Tag 2' },
-        { id: 3, text: 'Tag 3' },
-      ],
+      alias: 'Backup Supply 1',
       status: 'active',
-      linkedSupplies: [
-        {
-          id: 201,
-          address: '456 Oak Avenue',
-          area: 'Downtown',
-          alias: 'Backup Supply 1',
-        },
-        {
-          id: 202,
-          address: '789 Pine Road',
-          area: 'Uptown',
-          alias: 'Backup Supply 2',
-        },
-        {
-          id: 203,
-          address: '321 Birch Lane',
-          area: 'Suburban',
-          alias: 'Backup Supply 3',
-        },
-      ],
     },
+    {
+      id: 202,
+      address: '789 Pine Road',
+      area: 'Uptown',
+      nis: 123,
+      alias: 'Backup Supply 2',
+      status: 'active',
+    },
+    {
+      id: 203,
+      address: '321 Birch Lane',
+      area: 'Suburban',
+      nis: 123,
+      alias: 'Backup Supply 3',
+      status: 'active',
+    }
   ];
 
   constructor(private http: HttpClient) {}
 
-  getSupplyData(): Observable<ISupply> {
-    return this.http.get<ISupply>(`${this.apiUrl}/user_id`);
+  getSupplyData(): Observable<ISupply[]> {
+    return this.http.get<ISupply[]>(`${this.apiUrl}/user_id`);
   }
 
   getMockSupplyData(): Observable<ISupply[]> {
-    return of(this.mockSupplyData).pipe(delay(5000));
+    return of(this.mockSupplyData).pipe(delay(500));
   }
 }

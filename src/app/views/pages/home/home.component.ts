@@ -23,19 +23,19 @@ export class HomeComponent implements OnInit {
   voidSupplyObj: ISupply = {
     id: 0,
     address: '',
+    area: '',
     nis: 0,
     alias: '',
     tags: [],
     status: '',
-    linkedSupplies: [],
   };
 
-  supplyData = signal<ISupply>(this.voidSupplyObj); //Data we'll use for card-selector component
+  supplyData = signal<ISupply[]>([]); //Data we'll use for card-selector component
 
   // Mock Supplies for showing different states in the card-selector component
-  mainSupplyData = signal<ISupply>(this.voidSupplyObj);
-  mainSupplyTwoLinkedData = signal<ISupply>(this.voidSupplyObj);
-  mainSupplyManyLinkedData = signal<ISupply>(this.voidSupplyObj);
+  mainSupplyData = signal<ISupply[]>([]);
+  mainSupplyTwoLinkedData = signal<ISupply[]>([]);
+  mainSupplyManyLinkedData = signal<ISupply[]>([]);
 
   constructor(library: FaIconLibrary, private supplyService: SupplyService) {
     library.addIcons(faPlus, faMagnifyingGlass, faBell, faChevronDown); // Register the 'plus' icon
@@ -49,9 +49,9 @@ export class HomeComponent implements OnInit {
     // Mock data for testing purposes
     this.supplyService.getMockSupplyData().subscribe({
       next: (supplyData: ISupply[]) => {
-        this.mainSupplyData.set(supplyData[0]);
-        this.mainSupplyTwoLinkedData.set(supplyData[1]);
-        this.mainSupplyManyLinkedData.set(supplyData[2]);
+        this.mainSupplyData.set([supplyData[0]]);
+        this.mainSupplyTwoLinkedData.set([supplyData[1], supplyData[2], supplyData[3]]);
+        this.mainSupplyManyLinkedData.set(supplyData);
       },
       error: (err) => {
         // Handle error here
