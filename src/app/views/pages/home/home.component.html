@@ -1,18 +1,21 @@
 <!-- Header -->
 <header class="header">
-  <div class="header-actions">
-    <button class="icon-button">
-      <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
-    </button>
-    <button class="icon-button">
-      <fa-icon [icon]="['fas', 'bell']"></fa-icon>
-    </button>
-  </div>
+  
 </header>
 
 <!-- Content -->
-<div class="content">
+<div class="flex flex-wrap items-start px-8 py-4">
 
+  <div class="flex justify-end basis-full p-4">
+    <button mat-icon-button class="mr-2 border border-gray-500 rounded-md w-11 h-11 flex items-center justify-center">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button mat-icon-button class="border border-gray-500 rounded-md w-11 h-11 flex items-center justify-center">
+      <mat-icon>notifications_none</mat-icon>
+    </button>
+  </div>
+
+  <div class="flex-grow">
     <!--No Linked Supply-->
     <app-card-selector class="m-4" 
       [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD">
@@ -35,11 +38,13 @@
       [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
       [suppliesData]="mainSupplyManyLinkedData">
     </app-card-selector>
+  </div>
+
+  <button class="px-4 py-8 flex flex-col items-center m-4 bg-[#0066cc] rounded-[25px] text-white justify-center cursor-pointer" aria-label="">
+    <mat-icon class="mb-2">add</mat-icon>
+    <span class="fab-text">Asociar<br />Suministro</span>
+  </button>
 
 </div>
 
-<!-- Floating Action Button -->
-<button class="fab">
-  <fa-icon [icon]="['fas', 'plus']"></fa-icon>
-  <span class="fab-text">Asociar<br />Suministro</span>
-</button>
+

@@ -6,11 +6,13 @@ import { config } from '@environments/config';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faPlus, faMagnifyingGlass, faBell, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-home',
   imports: [
     FontAwesomeModule,
+    MatIconModule,
     CardSelectorComponent
   ],
   templateUrl: './home.component.html',
