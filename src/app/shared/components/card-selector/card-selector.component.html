@@ -31,8 +31,8 @@
 
       @if (hasManySupplies()) {
       <button (click)="toggleAccordion()"
-        class="ml-4 w-16 h-16 bg-sky-300 flex items-center justify-center rounded-full cursor-pointer">
-        <mat-icon>
+        class="ml-4 sm:w-10 sm:h-10 lg:w-16 lg:h-16 bg-sky-200 flex items-center justify-center rounded-full cursor-pointer">
+        <mat-icon class="!text-sky-600">
           @if (isOpen) { expand_less } @else { expand_more }
         </mat-icon>
       </button>
@@ -96,22 +96,33 @@
         [matAutocomplete]="auto"
       />
       <mat-autocomplete
-        autoActiveFirstOption
         #auto="matAutocomplete"
-        [displayWith]="displaySupplyAddress"
-      >
-        @for (option of filteredOptions | async; track option) {
-        <mat-option
-          class="p-2 border-b cursor-pointer hover:bg-gray-100"
-          [value]="option"
-          (click)="selectSupply(option)"
-        >
-          <h3 class="font-semibold">{{ option.address }}</h3>
-          <p class="text-sm">
-            NIS: {{ option.nis }} | Alias: {{ option.alias || "Sin datos" }}
-          </p>
-        </mat-option>
-        }
+        class="!p-0 !bg-white !rounded-lg !max-h-96"
+        [displayWith]="displaySupplyAddress">
+
+        <div class="p-4 flex basis-full sticky top-0 z-2 bg-white">
+          <h3 class="text-gray-500 font-semibold">Lista de suministros asociados a tu cuenta</h3>
+        </div>
+        
+        <div class="py-4">
+          @for (option of filteredOptions | async; track option) {
+            <mat-option
+              class="!p-4 !px-6 border-0 cursor-pointer !hover:bg-sky-300"
+              [value]="option"
+              (click)="selectSupply(option)">
+    
+              <h3 class="font-medium truncate">{{ option.address }}</h3>
+              <p class="text-sm truncate">
+                NIS: {{ option.nis }} | Alias: {{ option.alias || "Sin datos" }}
+              </p>
+    
+            </mat-option>
+            }
+        </div>
+
+        <div class="p-6 flex basis-full justify-center sticky bottom-0 bg-sky-100">
+          <a class="flex text-sky-500 cursor-pointer">Ver los suministros asociados <mat-icon class="ml-2">arrow_forward</mat-icon></a>
+        </div>
       </mat-autocomplete>
     </div>
   </div>

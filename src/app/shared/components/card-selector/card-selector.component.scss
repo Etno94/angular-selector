@@ -9,3 +9,7 @@
     padding: 16px;
   }
 }
+
+mat-option:hover, mat-option:focus {
+  background-color: #E0F2FE !important; /* Tailwind's sky-300 */
+}
