@@ -47,7 +47,7 @@ export class CardSelectorComponent implements OnInit {
       startWith(''),
       map((supply: ISupply | string | null) => {
       const address = typeof supply === 'string' ? supply : supply?.address;
-        return address ? this._filter(address as string || '') : this.secondarySupplies.slice();
+        return address ? this._filter(address || '') : this.secondarySupplies.slice();
       })
     );
   }

@@ -5,7 +5,7 @@
   max-height: 0;
 
   &.open {
-    max-height: 128px;
+    max-height: clamp(100%, 100%, 192px);
     padding: 16px;
   }
 }
