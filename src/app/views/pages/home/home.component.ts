@@ -1,11 +1,12 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, Inject, OnInit, signal } from '@angular/core';
 import { ISupply } from '@app/models/ISupply.interface';
-import { SupplyService } from '@app/services/supply.service';
 import { CardSelectorComponent } from '@app/shared/components/card-selector/card-selector.component';
 import { config } from '@environments/config';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatIconModule } from '@angular/material/icon';
 import { tap } from 'rxjs';
+import { ISupplyService } from '@app/models/ISupplyService.interface';
+import { ISupplyServiceToken } from '@app/app.config';
 
 @Component({
   selector: 'app-home',
@@ -21,16 +22,6 @@ export class HomeComponent implements OnInit {
 
   LINKED_SUPPLIES_THRESHOLD: number = config.linkedSuppliesThreshold;
 
-  voidSupplyObj: ISupply = {
-    id: 0,
-    address: '',
-    area: '',
-    nis: 0,
-    alias: '',
-    tags: [],
-    status: '',
-  };
-
   isRequestingData = signal<boolean>(false); // isLoading flag as feedback for the user
 
   supplyData = signal<ISupply[]>([]); //Data we'll use for card-selector component
@@ -41,7 +32,7 @@ export class HomeComponent implements OnInit {
   mainSupplyInactive = signal<ISupply[]>([]);
   mainSupplyManyLinkedData = signal<ISupply[]>([]);
 
-  constructor(private supplyService: SupplyService) {
+  constructor(@Inject(ISupplyServiceToken) private supplyService: ISupplyService) {
   }
 
   ngOnInit() {
@@ -52,11 +43,7 @@ export class HomeComponent implements OnInit {
 
     this.isRequestingData.set(true);
 
-    // We would use this to get the supply data from the API
-    // this.supplyService.getSupplyData()
-
-    // Mock data for testing purposes
-    this.supplyService.getMockSupplyData()
+    this.supplyService.getSupplyData()
       .pipe(
         tap(() => this.isRequestingData.set(false))
       )
