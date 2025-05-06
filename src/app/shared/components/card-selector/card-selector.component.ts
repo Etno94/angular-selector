@@ -2,6 +2,7 @@ import { Component, computed, effect, Input, OnInit, signal } from '@angular/cor
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { ISupply } from '@app/models/ISupply.interface';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -20,6 +21,7 @@ import { map, startWith } from 'rxjs';
     MatInputModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
     AsyncPipe,
     MatIconModule],
   templateUrl: './card-selector.component.html',
@@ -27,10 +29,13 @@ import { map, startWith } from 'rxjs';
 })
 export class CardSelectorComponent implements OnInit {
 
-  @Input() linkedSuppliesThreshold: number = 2;
+  @Input() linkedSuppliesThreshold: number = 3;
   @Input() suppliesData = signal<ISupply[]>([]);
+  @Input() isLoading = signal<boolean>(false);
 
-  myControl = new FormControl('');
+  selectedSupply: ISupply | null = null;
+
+  searchControl = new FormControl('');
   secondarySupplies: ISupply[] = [];
 
   isOpen = false;
@@ -43,7 +48,7 @@ export class CardSelectorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(''),
       map((supply: ISupply | string | null) => {
       const address = typeof supply === 'string' ? supply : supply?.address;
@@ -52,9 +57,13 @@ export class CardSelectorComponent implements OnInit {
     );
   }
 
+  // #region: Data flow
+
   setSuppliesDataWithoutFirst(): ISupply[] {
     return this.suppliesData().slice(1);
   }
+
+  // #endregion: Data flow
 
   // #region UI Controls
 
@@ -67,7 +76,7 @@ export class CardSelectorComponent implements OnInit {
     this.isOpen = !this.isOpen;
   }
 
-  openSuplyMenu(): void {
+  openSuplyOptions(): void {
   }
 
   // #endregion: UI Controls

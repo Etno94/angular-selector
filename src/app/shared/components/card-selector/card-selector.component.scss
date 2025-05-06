@@ -11,5 +11,5 @@
 }
 
 mat-option:hover, mat-option:focus {
-  background-color: #E0F2FE !important; /* Tailwind's sky-300 */
+  background-color: vars.$light-text !important; 
 }

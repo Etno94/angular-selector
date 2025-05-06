@@ -55,7 +55,7 @@ export class SupplyService {
       area: 'Suburban',
       nis: 123,
       alias: 'Backup Supply 3',
-      status: 'active',
+      status: 'inactive',
     },
     {
       id: 234,
@@ -103,6 +103,6 @@ export class SupplyService {
   }
 
   getMockSupplyData(): Observable<ISupply[]> {
-    return of(this.mockSupplyData).pipe(delay(500));
+    return of(this.mockSupplyData).pipe(delay(3500)); // Simulate a delay for the loading state
   }
 }

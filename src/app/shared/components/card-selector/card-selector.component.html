@@ -1,10 +1,14 @@
-@if (hasAtLeastOneSupply()) {
+@if (isLoading()) {
+  <div class="py-6 flex justify-center align-center overflow-hidden bg-blue-100 rounded-lg">
+    <mat-spinner class="w-10 h-10 text-sky-500" diameter="30"></mat-spinner>
+  </div>
+}
+@else if (hasAtLeastOneSupply()) {
 
 <div class="shadow-lg rounded-lg overflow-hidden border border-gray-300 bg-white">
   <div
     class="px-8 py-6 flex items-center justify-between"
-    
-  >
+    [ngClass]="{ 'filter opacity-50': suppliesData()[0].status === 'inactive' }">
     <div id="card-header-content">
       <h2 class="text-2xl font-medium m-0 truncate">{{ suppliesData()[0].address }}</h2>
       <p class="text-base mt-1 mb-1">
@@ -23,7 +27,7 @@
     </div>
 
     <div id="selector-buttons" class="flex items-center align-center">
-      <button mat-icon-button class="cursor-pointer" (click)="openSuplyMenu()">
+      <button mat-icon-button class="cursor-pointer" (click)="openSuplyOptions()">
         <!-- Would use icon from Material, but the later is a better match from Figma mock-->
         <!-- <mat-icon>settings</mat-icon> -->
         <span class="material-symbols-outlined"> settings </span>
@@ -31,10 +35,13 @@
 
       @if (hasManySupplies()) {
       <button (click)="toggleAccordion()"
-        class="ml-4 sm:w-10 sm:h-10 lg:w-16 lg:h-16 bg-sky-200 flex items-center justify-center rounded-full cursor-pointer">
-        <mat-icon class="!text-sky-600">
+        class="ml-4 sm:w-10 sm:h-10 lg:w-16 lg:h-16 flex items-center justify-center rounded-full cursor-pointer"
+        [ngClass]="suppliesData()[0].status === 'inactive' ? '!bg-grey-300' : 'bg-sky-200'">
+
+        <mat-icon [ngClass]="suppliesData()[0].status === 'inactive' ? '!text-grey-600' : '!text-sky-600'">
           @if (isOpen) { expand_less } @else { expand_more }
         </mat-icon>
+
       </button>
       }
     </div>
@@ -63,6 +70,7 @@
 </div>
 
 } @else {
+  
 <div class="p-4 flex flex-wrap rounded-lg overflow-hidden border border-yellow-500 bg-yellow-100">
   <h2 class="basis-full text-lg font-medium mb-2">Sin suministros actualmente</h2>
   <p class="font-light text-sm">Al momento no hay suministros asociados al usuario</p>
@@ -70,7 +78,8 @@
 }
 
 <ng-template #SecondarySuppliesTemplate let-linkedsupply>
-  <div class="p-4 flex-grow shadow-lg rounded-lg overflow-hidden bg-white last:ml-4">
+  <div class="p-4 flex-grow shadow-lg rounded-lg overflow-hidden bg-white last:ml-4"
+    [ngClass]="{ 'filter opacity-50': linkedsupply.status === 'inactive' }">
     <p class="text-sm font-light text-gray-600">Suministro asociado</p>
     <h2 class="text-xl font-semibold m-0">{{ linkedsupply.address }}</h2>
     <p class="text-sm mt-1 mb-1">
@@ -92,7 +101,7 @@
         type="text"
         placeholder="Buscar suministros asociados"
         class="w-full px-[14px] py-2.5 text-sm placeholder-gray-400 border border-gray-600 bg-white rounded"
-        [formControl]="myControl"
+        [formControl]="searchControl"
         [matAutocomplete]="auto"
       />
       <mat-autocomplete
@@ -127,4 +136,11 @@
     </div>
   </div>
   
+</ng-template>
+
+<ng-template #loadingSuppliesTemplate>
+  <div class="flex justify-center align-center overflow-hidden bg-blue-200 card-content">
+    <mat-spinner class="w-10 h-10 text-sky-600" diameter="30"></mat-spinner>
+  </div>
+
 </ng-template>

@@ -17,30 +17,41 @@
 
   <div class="flex-grow max-w-[calc(90vw-240px)]">
     <!--No Linked Supply-->
-    <app-card-selector class="m-4" 
+    <app-card-selector class="m-4"
+      [isLoading]="isRequestingData"
       [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD">
     </app-card-selector>
 
+    <!--Inactive Linked Supply-->
+    <app-card-selector class="m-4"
+      [isLoading]="isRequestingData"
+      [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
+      [suppliesData]="mainSupplyInactive">
+    </app-card-selector>
+
     <!--Main Supply-->
-    <app-card-selector class="m-4" 
+    <app-card-selector class="m-4"
+      [isLoading]="isRequestingData"
       [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
       [suppliesData]="mainSupplyData">
     </app-card-selector>
 
     <!--Main Supply + 2 Linked Supplies-->
     <app-card-selector class="m-4" 
+      [isLoading]="isRequestingData"
       [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
       [suppliesData]="mainSupplyTwoLinkedData">
     </app-card-selector>
 
     <!--Main Supply with many Linked Supplies-->
     <app-card-selector class="" 
+      [isLoading]="isRequestingData"
       [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
       [suppliesData]="mainSupplyManyLinkedData">
     </app-card-selector>
   </div>
 
-  <button class="px-4 py-2 lg:m-4 mt-6 lg:py-8 flex basis-full lg:basis-auto lg:flex-col items-center justify-between lg:justify-center bg-[#0066cc] rounded-[15px] lg:rounded-[25px] text-white cursor-pointer" aria-label="">
+  <button class="px-4 py-2 mt-6 lg:mx-4 lg:py-8 flex basis-full lg:basis-auto lg:flex-col items-center justify-between lg:justify-center bg-[#0066cc] rounded-[15px] lg:rounded-[25px] text-white cursor-pointer" aria-label="">
     <mat-icon class="lg:mb-2">add</mat-icon>
     <span class="lg:max-w-[6em]">Asociar Suministro</span>
   </button>
