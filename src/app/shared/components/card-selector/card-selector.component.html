@@ -143,7 +143,8 @@
       <mat-autocomplete
         #auto="matAutocomplete"
         class="!p-0 !bg-white !rounded-lg !max-h-96"
-        [displayWith]="displaySupplyAddress">
+        [displayWith]="displaySupplyAddress"
+        (optionSelected)="selectSupply($event.option.value)">
 
         <div class="p-4 flex basis-full sticky top-0 z-2 bg-white">
           <h3 class="text-gray-500 font-semibold">Lista de suministros asociados a tu cuenta</h3>
@@ -153,9 +154,7 @@
           @for (option of filteredOptions | async; track option) {
             <mat-option role="option" [attr.aria-selected]="option.id === selectedSupply?.id"
               class="!p-4 !px-6 border-0 cursor-pointer !hover:bg-sky-300"
-              [value]="option"
-              (click)="selectSupply(option)"
-              (keydown.enter)="selectSupply(option)">
+              [value]="option">
     
               <h3 class="font-medium truncate">{{ option.address }}</h3>
               <p class="text-sm truncate">
