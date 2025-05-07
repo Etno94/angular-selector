@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -7,6 +7,7 @@ import { InjectionToken } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { SupplyService } from '@app/services/supply.service'; // Real service to use when integrating with backend
 import { MockSupplyService } from '@app/services/mockSupply.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Injection Tokens
 export const ISupplyServiceToken = new InjectionToken<ISupplyService>('ISupplyService');
@@ -19,5 +20,6 @@ export const appConfig: ApplicationConfig = {
     },
     provideRouter(routes),
     provideHttpClient(),
+    importProvidersFrom(BrowserAnimationsModule)
   ]
 };

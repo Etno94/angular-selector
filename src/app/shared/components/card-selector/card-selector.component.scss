@@ -1,4 +1,5 @@
-@use '@styles/_variables.scss' as vars;
+// @use '@styles/_variables.scss' as vars;
+@use '../../../../styles/variables' as vars;
 
 .card-content {
   transition: max-height 0.3s ease, padding 0.3s ease;
