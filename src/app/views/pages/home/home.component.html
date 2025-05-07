@@ -1,57 +1,61 @@
-<!-- Header -->
-<header class="header">
-  
-</header>
-
 <!-- Content -->
-<div class="flex flex-wrap items-start px-8 py-4">
+<div role="main" aria-label="Home Content" class="flex flex-wrap items-start px-8 py-4">
 
-  <div class="flex justify-end basis-full p-4">
-    <button mat-icon-button class="mr-2 border border-gray-500 rounded-md w-11 h-11 flex items-center justify-center">
+  <div role="region" aria-label="Top Actions" class="flex justify-end basis-full p-4">
+    <button mat-icon-button aria-label="Search" 
+      class="mr-2 border border-gray-500 rounded-md w-11 h-11 flex items-center justify-center">
       <mat-icon>search</mat-icon>
     </button>
-    <button mat-icon-button class="border border-gray-500 rounded-md w-11 h-11 flex items-center justify-center">
+    <button mat-icon-button aria-label="Notifications" 
+      class="border border-gray-500 rounded-md w-11 h-11 flex items-center justify-center">
       <mat-icon>notifications_none</mat-icon>
     </button>
   </div>
 
-  <div class="flex-grow max-w-[calc(90vw-240px)]">
+  <div role="region" aria-label="Supplies Overview" 
+    class="flex-grow max-w-[calc(90vw-240px)]">
     <!--No Linked Supply-->
     <app-card-selector class="m-4"
       [isLoading]="isRequestingData"
-      [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD">
+      [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
+      aria-label="No Linked Supply">
     </app-card-selector>
 
     <!--Inactive Linked Supply-->
     <app-card-selector class="m-4"
       [isLoading]="isRequestingData"
       [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
-      [suppliesData]="mainSupplyInactive">
+      [suppliesData]="mainSupplyInactive"
+      aria-label="Inactive Linked Supply">
     </app-card-selector>
 
     <!--Main Supply-->
     <app-card-selector class="m-4"
       [isLoading]="isRequestingData"
       [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
-      [suppliesData]="mainSupplyData">
+      [suppliesData]="mainSupplyData"
+      aria-label="Main Supply">
     </app-card-selector>
 
     <!--Main Supply + 2 Linked Supplies-->
     <app-card-selector class="m-4" 
       [isLoading]="isRequestingData"
       [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
-      [suppliesData]="mainSupplyTwoLinkedData">
+      [suppliesData]="mainSupplyTwoLinkedData"
+      aria-label="Main Supply with Two Linked Supplies">
     </app-card-selector>
 
     <!--Main Supply with many Linked Supplies-->
     <app-card-selector class="" 
       [isLoading]="isRequestingData"
       [linkedSuppliesThreshold]="LINKED_SUPPLIES_THRESHOLD"
-      [suppliesData]="mainSupplyManyLinkedData">
+      [suppliesData]="mainSupplyManyLinkedData"
+      aria-label="Main Supply with Many Linked Supplies">
     </app-card-selector>
   </div>
 
-  <button class="px-4 py-2 mt-6 lg:mx-4 lg:py-8 flex basis-full lg:basis-auto lg:flex-col items-center justify-between lg:justify-center bg-[#0066cc] rounded-[15px] lg:rounded-[25px] text-white cursor-pointer" aria-label="">
+  <button aria-label="Add Supply button" 
+    class="px-4 py-2 mt-6 lg:mx-4 lg:py-8 flex basis-full lg:basis-auto lg:flex-col items-center justify-between lg:justify-center bg-[#0066cc] rounded-[15px] lg:rounded-[25px] text-white cursor-pointer" aria-label="">
     <mat-icon class="lg:mb-2">add</mat-icon>
     <span class="lg:max-w-[6em]">Asociar Suministro</span>
   </button>

@@ -1,23 +1,26 @@
 @if (isLoading()) {
   <!-- Loading State template-->
-  <div class="py-6 flex justify-center align-center overflow-hidden bg-blue-100 rounded-lg">
+  <div role="status" aria-live="polite" class="py-6 flex justify-center align-center overflow-hidden bg-blue-100 rounded-lg">
     <mat-spinner class="w-10 h-10 text-sky-500" diameter="30"></mat-spinner>
   </div>
 }
 @else if (hasAtLeastOneSupply()) {
 <!-- Supply Data Display-->
-<div class="shadow-lg rounded-lg overflow-hidden border border-gray-300 bg-white">
+<div role="region" aria-label="Supply Details" 
+  class="shadow-lg rounded-lg overflow-hidden border border-gray-300 bg-white">
   <div
     class="px-8 py-6 flex items-center justify-between"
     [ngClass]="{ 'filter opacity-50': selectedSupply?.status === 'inactive' }">
     <div id="card-header-content">
-      <h2 class="text-2xl font-medium m-0 truncate">{{ selectedSupply?.address }}</h2>
+      <h2 aria-label="Supply Address" class="text-2xl font-medium m-0 truncate">
+          {{ selectedSupply?.address }}
+      </h2>
       <p class="text-base mt-1 mb-1">
-        <span class="truncate">NIS: {{ selectedSupply?.nis }}</span>
+        <span aria-label="NIS" class="truncate">NIS: {{ selectedSupply?.nis }}</span>
         <span class="mr-2 ml-2">|</span>
-        <span class="truncate">Alias: {{ selectedSupply?.alias }} </span>
+        <span aria-label="Alias" class="truncate">Alias: {{ selectedSupply?.alias }} </span>
       </p>
-      <div class="mt-2">
+      <div aria-label="Tags" class="mt-2">
         @for (tag of selectedSupply?.tags; track $index) {
         <span
           class="inline bg-gray-100 text-gray-700 pt-1 pb-1 pl-2 pr-2 mr-1 rounded-xs text-xs"
@@ -27,15 +30,15 @@
       </div>
     </div>
 
-    <div id="selector-buttons" class="flex items-center align-center">
-      <button mat-icon-button class="cursor-pointer" [matMenuTriggerFor]="supplyMenuOptions">
+    <div class="flex items-center align-center">
+      <button aria-label="Open Supply Options" mat-icon-button class="cursor-pointer" [matMenuTriggerFor]="supplyMenuOptions">
         <!-- Would use icon from Material, but the later is a better match from Figma mock-->
         <!-- <mat-icon>settings</mat-icon> -->
         <span class="material-symbols-outlined"> settings </span>
       </button>
 
       @if (hasManySupplies()) {
-      <button (click)="toggleAccordion()"
+      <button aria-label="Toggle Supply List" (click)="toggleAccordion()" (keydown.enter)="toggleAccordion()"
         class="ml-4 sm:w-10 sm:h-10 lg:w-16 lg:h-16 flex items-center justify-center rounded-full cursor-pointer"
         [ngClass]="selectedSupply?.status === 'inactive' ? '!bg-grey-300' : 'bg-sky-200'">
 
@@ -49,7 +52,7 @@
   </div>
 
   @if (hasManySupplies()) {
-  <div
+  <div role="region" aria-label="Linked Supplies"
     class="flex justify-center align-center overflow-hidden bg-blue-200 card-content"
     [class.open]="isOpen">
     <!-- We use the Input Suggest for Linked supply template-->
@@ -70,7 +73,8 @@
 } 
 @else {
   <!-- Has No data State template-->
-  <div class="p-4 flex flex-wrap rounded-lg overflow-hidden border border-yellow-500 bg-yellow-100">
+  <div role="alert" aria-live="polite" 
+    class="p-4 flex flex-wrap rounded-lg overflow-hidden border border-yellow-500 bg-yellow-100">
     <h2 class="basis-full text-lg font-medium mb-2">Sin suministros actualmente</h2>
     <p class="font-light text-sm">Al momento no hay suministros asociados al usuario</p>
   </div>
@@ -94,7 +98,13 @@
 <ng-template #SecondarySuppliesTemplate let-linkedsupply>
   <div class="p-4 flex-grow shadow-lg rounded-lg overflow-hidden bg-white last:ml-4"
     [ngClass]="{ 'filter opacity-50': linkedsupply.status === 'inactive', 'border': linkedsupply.id === selectedSupply?.id }"
-    (click)="selectSupply(linkedsupply)">
+    (click)="selectSupply(linkedsupply)"
+    (keydown.enter)="selectSupply(linkedsupply)"
+    role="button"
+    tabindex="0"
+    [attr.aria-label]="'Supply at ' + linkedsupply.address"
+    [attr.aria-selected]="linkedsupply.id === selectedSupply?.id">
+
     <p class="text-sm font-light text-gray-600">Suministro asociado</p>
     <h2 class="text-xl font-semibold m-0">{{ linkedsupply.address }}</h2>
     <p class="text-sm mt-1 mb-1">
@@ -107,7 +117,8 @@
 
 <!--Template for card-view supplies-->
 <ng-template #SuppliesSearchTemplate>
-  <div class="flex flex-col align-center justify-start basis-full overflow-hidden p-6">
+  <div role="region" aria-label="Search Supplies" 
+    class="flex flex-col align-center justify-start basis-full overflow-hidden p-6">
     <h3 class="text-lg text-[#00073E]">Encontrá más rápido</h3>
     <p class="text-sm text-[#00073E]">Hemos reemplazado las tarjetas por un buscador para facilitar la selección cuando hay más de 2 suministros.</p>
 
@@ -116,14 +127,16 @@
         matInput
         type="text"
         placeholder="Buscar suministros asociados"
+        aria-label="Search Supplies"
         class="w-full px-[14px] py-2.5 text-sm placeholder-gray-400 border border-gray-600 bg-white rounded"
         [formControl]="searchControl"
         [matAutocomplete]="auto"
       />
       <button
-        type="button"
+        type="button" aria-label="Clear Search"
         class="absolute top-1/2 right-2 transform -translate-y-1/2 flex items-center justify-center w-8 h-8 text-sky-500 bg-white rounded-full hover:bg-sky-200 hover:text-sky-600"
         (click)="searchControl.setValue('')"
+        (keydown.enter)="searchControl.setValue('')"
       >
         <mat-icon class="text-base">close</mat-icon>
       </button>
@@ -138,10 +151,11 @@
         
         <div class="py-4">
           @for (option of filteredOptions | async; track option) {
-            <mat-option
+            <mat-option role="option" [attr.aria-selected]="option.id === selectedSupply?.id"
               class="!p-4 !px-6 border-0 cursor-pointer !hover:bg-sky-300"
               [value]="option"
-              (click)="selectSupply(option)">
+              (click)="selectSupply(option)"
+              (keydown.enter)="selectSupply(option)">
     
               <h3 class="font-medium truncate">{{ option.address }}</h3>
               <p class="text-sm truncate">
@@ -153,7 +167,9 @@
         </div>
 
         <div class="p-6 flex basis-full justify-center sticky bottom-0 bg-sky-100">
-          <a class="flex text-sky-500 cursor-pointer">Ver los suministros asociados <mat-icon class="ml-2">arrow_forward</mat-icon></a>
+          <a tabindex="0" aria-label="View All Supplies" class="flex text-sky-500 cursor-pointer">
+            Ver los suministros asociados <mat-icon class="ml-2">arrow_forward</mat-icon>
+          </a>
         </div>
       </mat-autocomplete>
     </div>

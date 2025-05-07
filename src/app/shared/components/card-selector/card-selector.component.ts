@@ -1,4 +1,4 @@
-import { Component, computed, effect, Input, OnInit, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, effect, Input, OnInit, signal } from '@angular/core';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 import { AsyncPipe, CommonModule } from '@angular/common';
@@ -27,7 +27,8 @@ import { map, startWith } from 'rxjs';
     AsyncPipe,
     MatIconModule],
   templateUrl: './card-selector.component.html',
-  styleUrl: './card-selector.component.scss'
+  styleUrl: './card-selector.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush // We use OnPush strategy to optimize performance and avoid unnecessary re-renders
 })
 export class CardSelectorComponent implements OnInit {
 
