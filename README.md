@@ -57,7 +57,7 @@ To set up the project locally, follow these steps:
   While the layout and menu are part of the project, they were not prioritized to focus on delivering a high-quality `CardSelectorComponent` within the given timeframe.
 
 - **Modular Architecture**:
-  The project is designed with a modular architecture to ensure scalability and maintainability. Each component is self-contained and reusable.
+  The project is designed with a modular architecture to ensure scalability and maintainability. Each UI element is encapsulated in its own component, ensuring reusability and separation of concerns.
 
 - **Tailwind CSS**:
   Tailwind CSS was chosen for its ability to improve code maintainability, speed up development, and create visually appealing and performant views.
@@ -102,6 +102,18 @@ To set up the project locally, follow these steps:
 
 - **GitHub Pages Deployment**:
   The project is deployed using Angular CLI's `ng deploy` command, making it easy to showcase the application.
+
+- **Dependency Injection**:
+Used throughout the project to decouple components from their dependencies, making the application more testable and maintainable. For example, the `ISupplyService` token allows switching between `MockSupplyService` and `SupplyService`.
+
+- **Observer Pattern**:
+  Leveraged through Angular's reactive forms and `signal` API to handle state changes and propagate updates to the UI dynamically.
+
+- **Template Method Pattern**:
+  The `CardSelectorComponent` uses templates to define reusable structures for displaying supplies, such as `SecondarySuppliesTemplate` and `SuppliesSearchTemplate`.
+
+- **Factory Pattern**:
+  The use of Angular's `InjectionToken` and providers acts as a factory to dynamically provide the appropriate service implementation (`MockSupplyService` or `SupplyService`).
 
 ---
 
