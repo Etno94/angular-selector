@@ -17,6 +17,7 @@ import {MatIconModule} from '@angular/material/icon';
   styleUrl: './layout.component.scss'
 })
 export class LayoutComponent {
+  isSidebarOpen = false;
   constructor(library: FaIconLibrary) {
     library.addIcons( faChevronDown);
   }

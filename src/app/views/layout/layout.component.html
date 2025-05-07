@@ -1,38 +1,24 @@
-<!-- <div class="layout">
-    <aside class="sidebar">
-      <div class="logo">STOREY</div>
-      <nav>
-        <ul>
-          <li><a href="#">Texto ejemplo</a></li>
-          <li><a href="#">Servicios</a></li>
-          <li><a href="#">Texto ejemplo</a></li>
-        </ul>
-      </nav>
-      <div class="user-info">
-        <p>Emanuel Hernández</p>
-        <a href="#">Mi cuenta</a>
-      </div>
-    </aside>
-  
-    <div class="main-content">
-      <header class="header">
-        <div class="search-bar">
-          <input type="text" placeholder="Buscar" />
-        </div>
-        <div class="actions">
-          <button>🔔</button>
-          <button>🔍</button>
-        </div>
-      </header>
-      <main>
-        <router-outlet></router-outlet>
-      </main>
-    </div>
-  </div> -->
+<div class="app-container flex-col lg:flex-row">
 
-<div class="app-container">
+  <!-- Top Bar for Mobile -->
+  <div class="flex items-center justify-between bg-[#0066cc] text-white px-4 h-16 lg:hidden">
+    <!-- Logo -->
+    <div class="!m-4 flex items-center">
+      <img src="assets/images/logos/storey-logo.png" alt="Storey" class="h-8" />
+    </div>
+
+    <!-- Hamburger Icon -->
+    <button
+      class="!m-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+      (click)="isSidebarOpen = !isSidebarOpen"
+      aria-label="Toggle Menu"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  
   <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="hidden lg:flex sidebar" [class.hidden]="!isSidebarOpen">
     <!-- Logo -->
     <div class="logo-container">
       <div class="logo">
