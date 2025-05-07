@@ -21,7 +21,6 @@ import { ISupplyServiceToken } from '@app/app.config';
 export class HomeComponent implements OnInit {
 
   LINKED_SUPPLIES_THRESHOLD: number = config.linkedSuppliesThreshold;
-
   isRequestingData = signal<boolean>(false); // isLoading flag as feedback for the user
 
   supplyData = signal<ISupply[]>([]); //Data we'll use for card-selector component
@@ -32,6 +31,10 @@ export class HomeComponent implements OnInit {
   mainSupplyInactive = signal<ISupply[]>([]);
   mainSupplyManyLinkedData = signal<ISupply[]>([]);
 
+  /**
+   * @param ISupplyServiceToken we set the service token gaining flexibility and development speed
+   * @param supplyService service instance we'll be using to operate 
+   */
   constructor(@Inject(ISupplyServiceToken) private supplyService: ISupplyService) {
   }
 

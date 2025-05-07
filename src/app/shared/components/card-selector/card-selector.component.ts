@@ -3,6 +3,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatMenuModule} from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { ISupply } from '@app/models/ISupply.interface';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -15,7 +16,8 @@ import { map, startWith } from 'rxjs';
   imports: [
     CommonModule,
     FormsModule,
-    MatExpansionModule, 
+    MatExpansionModule,
+    MatMenuModule,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -43,21 +45,21 @@ export class CardSelectorComponent implements OnInit {
 
   constructor() {
     effect(() => {
+      // Each time the suppliesData signal changes, we set the selectedSupply to the first supply in the list and update secondarySupplies
+      this.selectFirstSupply();
       this.secondarySupplies = this.setSuppliesDataWithoutFirst();
     });
   }
 
   ngOnInit() {
-    this.filteredOptions = this.searchControl.valueChanges.pipe(
-      startWith(''),
-      map((supply: ISupply | string | null) => {
-      const address = typeof supply === 'string' ? supply : supply?.address;
-        return address ? this._filter(address || '') : this.secondarySupplies.slice();
-      })
-    );
+    this.setSuggestObservable();
   }
 
   // #region: Data flow
+
+  selectFirstSupply(): void {
+    this.selectedSupply = this.suppliesData()[0];
+  }
 
   setSuppliesDataWithoutFirst(): ISupply[] {
     return this.suppliesData().slice(1);
@@ -68,15 +70,33 @@ export class CardSelectorComponent implements OnInit {
   // #region UI Controls
 
   selectSupply(supply: ISupply) {
-    console.log('Selected supply:', supply);
-    // Handle the supply selection logic here
+    if (!supply || !supply.id) return;
+    // We show the selected supply details in the main card. 
+    // When unselecting, we set the selected supply back to the first supply in the list.
+    this.selectedSupply = supply.id === this.selectedSupply?.id ? this.suppliesData()[0] : supply;
   }
   
   toggleAccordion(): void {
     this.isOpen = !this.isOpen;
   }
 
-  openSuplyOptions(): void {
+  openSupplyOptions(): void {
+  }
+
+  setSuggestObservable(): void {
+    this.filteredOptions = this.searchControl.valueChanges.pipe(
+      startWith(''),
+      map((supply: ISupply | string | null) => {
+        if (typeof supply === 'string') {
+          // We reset selectedSupply to the first supply if the input is cleared or invalid
+          this.selectFirstSupply();
+        } 
+        // We check input value type and return the filtered options.
+        // If no valid filter is provided, we return the secondarySupplies list.
+        const address = typeof supply === 'string' ? supply : supply?.address;
+        return address ? this._filter(address || '') : this.secondarySupplies.slice();
+      })
+    );
   }
 
   // #endregion: UI Controls

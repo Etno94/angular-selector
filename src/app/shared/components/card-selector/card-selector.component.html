@@ -1,23 +1,24 @@
 @if (isLoading()) {
+  <!-- Loading State template-->
   <div class="py-6 flex justify-center align-center overflow-hidden bg-blue-100 rounded-lg">
     <mat-spinner class="w-10 h-10 text-sky-500" diameter="30"></mat-spinner>
   </div>
 }
 @else if (hasAtLeastOneSupply()) {
-
+<!-- Supply Data Display-->
 <div class="shadow-lg rounded-lg overflow-hidden border border-gray-300 bg-white">
   <div
     class="px-8 py-6 flex items-center justify-between"
-    [ngClass]="{ 'filter opacity-50': suppliesData()[0].status === 'inactive' }">
+    [ngClass]="{ 'filter opacity-50': selectedSupply?.status === 'inactive' }">
     <div id="card-header-content">
-      <h2 class="text-2xl font-medium m-0 truncate">{{ suppliesData()[0].address }}</h2>
+      <h2 class="text-2xl font-medium m-0 truncate">{{ selectedSupply?.address }}</h2>
       <p class="text-base mt-1 mb-1">
-        <span class="truncate">NIS: {{ suppliesData()[0].nis }}</span>
+        <span class="truncate">NIS: {{ selectedSupply?.nis }}</span>
         <span class="mr-2 ml-2">|</span>
-        <span class="truncate">Alias: {{ suppliesData()[0].alias }} </span>
+        <span class="truncate">Alias: {{ selectedSupply?.alias }} </span>
       </p>
       <div class="mt-2">
-        @for (tag of suppliesData()[0].tags; track $index) {
+        @for (tag of selectedSupply?.tags; track $index) {
         <span
           class="inline bg-gray-100 text-gray-700 pt-1 pb-1 pl-2 pr-2 mr-1 rounded-xs text-xs"
           >{{ tag.text }}</span
@@ -27,7 +28,7 @@
     </div>
 
     <div id="selector-buttons" class="flex items-center align-center">
-      <button mat-icon-button class="cursor-pointer" (click)="openSuplyOptions()">
+      <button mat-icon-button class="cursor-pointer" [matMenuTriggerFor]="supplyMenuOptions">
         <!-- Would use icon from Material, but the later is a better match from Figma mock-->
         <!-- <mat-icon>settings</mat-icon> -->
         <span class="material-symbols-outlined"> settings </span>
@@ -36,9 +37,9 @@
       @if (hasManySupplies()) {
       <button (click)="toggleAccordion()"
         class="ml-4 sm:w-10 sm:h-10 lg:w-16 lg:h-16 flex items-center justify-center rounded-full cursor-pointer"
-        [ngClass]="suppliesData()[0].status === 'inactive' ? '!bg-grey-300' : 'bg-sky-200'">
+        [ngClass]="selectedSupply?.status === 'inactive' ? '!bg-grey-300' : 'bg-sky-200'">
 
-        <mat-icon [ngClass]="suppliesData()[0].status === 'inactive' ? '!text-grey-600' : '!text-sky-600'">
+        <mat-icon [ngClass]="selectedSupply?.status === 'inactive' ? '!text-grey-600' : '!text-sky-600'">
           @if (isOpen) { expand_less } @else { expand_more }
         </mat-icon>
 
@@ -50,36 +51,50 @@
   @if (hasManySupplies()) {
   <div
     class="flex justify-center align-center overflow-hidden bg-blue-200 card-content"
-    [class.open]="isOpen"
-  >
+    [class.open]="isOpen">
     <!-- We use the Input Suggest for Linked supply template-->
     @if (hasSuppliesAboveThreshold()) {
-    <ng-container *ngTemplateOutlet="SuppliesSearchTemplate"></ng-container>
+      <ng-container *ngTemplateOutlet="SuppliesSearchTemplate"></ng-container>
     }
     <!-- We use the Linked supply template-->
-    @else { @for (supply of secondarySupplies; track $index) {
-    <ng-container
-      *ngTemplateOutlet="
-        SecondarySuppliesTemplate;
-        context: { $implicit: supply }
-      "
-    ></ng-container>
-    } }
+    @else { 
+        @for (supply of secondarySupplies; track $index) {
+          <ng-container *ngTemplateOutlet="SecondarySuppliesTemplate; context: { $implicit: supply }">
+          </ng-container>
+        }  
+    }
   </div>
   }
 </div>
 
-} @else {
-  
-<div class="p-4 flex flex-wrap rounded-lg overflow-hidden border border-yellow-500 bg-yellow-100">
-  <h2 class="basis-full text-lg font-medium mb-2">Sin suministros actualmente</h2>
-  <p class="font-light text-sm">Al momento no hay suministros asociados al usuario</p>
-</div>
+} 
+@else {
+  <!-- Has No data State template-->
+  <div class="p-4 flex flex-wrap rounded-lg overflow-hidden border border-yellow-500 bg-yellow-100">
+    <h2 class="basis-full text-lg font-medium mb-2">Sin suministros actualmente</h2>
+    <p class="font-light text-sm">Al momento no hay suministros asociados al usuario</p>
+  </div>
 }
 
+<mat-menu #supplyMenuOptions="matMenu" class="!bg-white">
+  <div class="p-3 flex items-center justify-start">
+    <span class="font-light">Opciones de suministro</span>
+  </div>
+  <button mat-menu-item disabled>
+    <mat-icon class="!text-sky-500">edit_square</mat-icon>
+    <span>Editar Alias</span>
+  </button>
+  <button mat-menu-item disabled>
+    <mat-icon class="!text-red-500">link_off</mat-icon>
+    <span>Desvincular Suministro</span>
+  </button>
+</mat-menu>
+
+<!--Template for card-view supplies-->
 <ng-template #SecondarySuppliesTemplate let-linkedsupply>
   <div class="p-4 flex-grow shadow-lg rounded-lg overflow-hidden bg-white last:ml-4"
-    [ngClass]="{ 'filter opacity-50': linkedsupply.status === 'inactive' }">
+    [ngClass]="{ 'filter opacity-50': linkedsupply.status === 'inactive', 'border': linkedsupply.id === selectedSupply?.id }"
+    (click)="selectSupply(linkedsupply)">
     <p class="text-sm font-light text-gray-600">Suministro asociado</p>
     <h2 class="text-xl font-semibold m-0">{{ linkedsupply.address }}</h2>
     <p class="text-sm mt-1 mb-1">
@@ -90,12 +105,13 @@
   </div>
 </ng-template>
 
+<!--Template for card-view supplies-->
 <ng-template #SuppliesSearchTemplate>
   <div class="flex flex-col align-center justify-start basis-full overflow-hidden p-6">
     <h3 class="text-lg text-[#00073E]">Encontrá más rápido</h3>
     <p class="text-sm text-[#00073E]">Hemos reemplazado las tarjetas por un buscador para facilitar la selección cuando hay más de 2 suministros.</p>
 
-    <div class="mt-4 align-start flex-grow">
+    <div class="relative mt-4 align-start flex-grow">
       <input
         matInput
         type="text"
@@ -104,6 +120,13 @@
         [formControl]="searchControl"
         [matAutocomplete]="auto"
       />
+      <button
+        type="button"
+        class="absolute top-1/2 right-2 transform -translate-y-1/2 flex items-center justify-center w-8 h-8 text-sky-500 bg-white rounded-full hover:bg-sky-200 hover:text-sky-600"
+        (click)="searchControl.setValue('')"
+      >
+        <mat-icon class="text-base">close</mat-icon>
+      </button>
       <mat-autocomplete
         #auto="matAutocomplete"
         class="!p-0 !bg-white !rounded-lg !max-h-96"
@@ -136,11 +159,4 @@
     </div>
   </div>
   
-</ng-template>
-
-<ng-template #loadingSuppliesTemplate>
-  <div class="flex justify-center align-center overflow-hidden bg-blue-200 card-content">
-    <mat-spinner class="w-10 h-10 text-sky-600" diameter="30"></mat-spinner>
-  </div>
-
 </ng-template>
