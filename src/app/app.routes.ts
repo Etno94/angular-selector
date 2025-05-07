@@ -8,6 +8,7 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    //canActivate: [AuthGuard] // Here we would use an AuthGuard to protect the route
   },
   { path: '**', redirectTo: 'login' }
 ];
