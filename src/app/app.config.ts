@@ -8,6 +8,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { SupplyService } from '@app/services/supply.service'; // Real service to use when integrating with backend
 import { MockSupplyService } from '@app/services/mockSupply.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { MockDataService } from './mock-db/mock-data.service';
 
 // Injection Tokens
 export const ISupplyServiceToken = new InjectionToken<ISupplyService>('ISupplyService');
@@ -20,6 +22,9 @@ export const appConfig: ApplicationConfig = {
     },
     provideRouter(routes),
     provideHttpClient(),
-    importProvidersFrom(BrowserAnimationsModule)
+    importProvidersFrom(
+      BrowserAnimationsModule,
+      HttpClientInMemoryWebApiModule.forRoot(MockDataService, { delay: 500 })
+    )
   ]
 };
